@@ -1,5 +1,5 @@
-# lightweight-game-engine
-Super WIP studies and experiments towards a lightweight little GLFW-based game engine.
+# TheEngine(C)
+Super WIP studies and experiments towards ar lightweight little GLFW-based game engine.
 
 Needs GLEW, GLut and GLFW. Contains a Visual Studio Solution and Project.
 
