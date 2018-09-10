@@ -19,7 +19,7 @@ int main(){
 	int i;
 	for (i = 0; i < 6; i++) myScene.addEntity(&myBox[i]);
 	myScene.setCameraPosition(vec3(0.0f, 0.0f, 0.0f));
-	myScene.cameraLookAt(vec3(10.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f));
+	myScene.cameraLookAt(vec3(1.0f, 0.0f, 1.0f), vec3(0.0f, 1.0f, 0.0f));
 	//myBox.getPosition()
 
 	// main loop

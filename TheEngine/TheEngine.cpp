@@ -76,7 +76,7 @@ void initializeTheEngine(){
 	width = 680;
 	height = 400;
 	aspectRatio = (float)width / (float)height;
-	window = glfwCreateWindow(width, height, "Mein liebes Spiel", 0, 0);
+	window = glfwCreateWindow(width, height, "TheEngine", 0, 0);
 	if (!window){
 		glfwTerminate();
 		exit(EXIT_FAILURE);
@@ -138,8 +138,7 @@ GLuint loadShaders(const char * vertex_file, const char * fragment_file){
 	std::ifstream fs_stream(fragment_file, std::ios::in);
 	if (fs_stream.is_open()){
 		std::string line = "";
-		while (getline(fs_stream, line))
-			fs_code += "\n" + line;
+		while (getline(fs_stream, line)) fs_code += "\n" + line;
 		fs_stream.close();
 	}
 
@@ -147,26 +146,26 @@ GLuint loadShaders(const char * vertex_file, const char * fragment_file){
 	int infoLogLength;
 
 	// Compile Vertex Shader
-	char const * vs_source = vs_code.c_str();
+	GLchar const * vs_source = vs_code.c_str();
 	glShaderSource(vs, 1, &vs_source, NULL);
 	glCompileShader(vs);
 
 	// Check Vertex Shader
 	glGetShaderiv(vs, GL_COMPILE_STATUS, &result);
 	glGetShaderiv(vs, GL_INFO_LOG_LENGTH, &infoLogLength);
-	std::vector<char> vs_error(infoLogLength);
+	std::vector<GLchar> vs_error(infoLogLength);
 	glGetShaderInfoLog(vs, infoLogLength, NULL, vs_error.data());
 	if (!vs_error.empty()) std::cerr << vs_error.data() << "\n";
 
 	// Compile Fragment Shader
-	char const * fs_source = fs_code.c_str();
+	GLchar const * fs_source = fs_code.c_str();
 	glShaderSource(fs, 1, &fs_source, NULL);
 	glCompileShader(fs);
 
 	// Check Fragment Shader
 	glGetShaderiv(fs, GL_COMPILE_STATUS, &result);
 	glGetShaderiv(fs, GL_INFO_LOG_LENGTH, &infoLogLength);
-	std::vector<char> fs_error(infoLogLength);
+	std::vector<GLchar> fs_error(infoLogLength);
 	glGetShaderInfoLog(fs, infoLogLength, NULL, fs_error.data());
 	if (!fs_error.empty()) std::cerr << fs_error.data() << "\n";
 
@@ -179,10 +178,10 @@ GLuint loadShaders(const char * vertex_file, const char * fragment_file){
 	// Check the program
 	glGetProgramiv(shaders, GL_LINK_STATUS, &result);
 	glGetProgramiv(shaders, GL_INFO_LOG_LENGTH, &infoLogLength);
-	std::vector<char> shaders_error(glm::max(infoLogLength, int(1)));
-	glGetProgramInfoLog(shaders, infoLogLength, NULL, &shaders_error[0]);
-	std::cerr << &shaders_error[0] << "\n";
-
+	std::vector<GLchar> shaders_error(infoLogLength);
+	glGetProgramInfoLog(shaders, infoLogLength, NULL, shaders_error.data());
+	if (!shaders_error.empty()) std::cerr << shaders_error.data() << "\n";
+	
 	glDeleteShader(vs);
 	glDeleteShader(fs);
 
